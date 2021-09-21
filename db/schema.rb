@@ -25,8 +25,6 @@ ActiveRecord::Schema.define(version: 2021_09_20_155929) do
     t.string "title"
     t.string "artist"
     t.integer "year"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "user_games", force: :cascade do |t|
