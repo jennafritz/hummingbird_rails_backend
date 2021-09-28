@@ -4,40 +4,17 @@ class GamesController < ApplicationController
     before_action :find_game, only: [:show, :update, :destroy]
 
 
-    def index
-        games = Game.all
-        render json: games
-    end
-    
-    def show
-        render json: @game
-    end
-
     def create
-        game = Game.create(game_params)
-        render json: game
+        new_game = Game.create!(game_params)
+        render json: new_game, status: :created
+    rescue ActiveRecord::RecordInvalid => invalid
+        render json: {error: invalid.record.errors.full_messages}, status: :unprocessable_entity
     end
-
-    def update
-        @game.update(game_params)
-        render json: @game
-    end
-
-    def destroy
-        @game.destroy
-        render json: "Game Deleted!!"
-    end
-    
 
     private
 
-    def find_game
-        @game = Game.find(params[:id])
-    end
-
     def game_params
-        params.permit(:name, :age)
+        params.permit(:name)
     end
-
 
 end
