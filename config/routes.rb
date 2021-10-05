@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
 
+  
+  # removed the following in lieu of JWT auth
   # get "/users", to: "users#check_user_pass"
   # get "/check_user", to: "users#check_user"
+  
   get "/leaderboard", to: "users#leaderboard"
 
   resources :user_games, only: [:create]
