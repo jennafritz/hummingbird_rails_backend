@@ -31,12 +31,14 @@ class SongsController < ApplicationController
         count = 0
         while count < 4
             index = (start - 1) % decades.length
+            print index
             decade_selected = decades[index]
             decade_end = decade_selected + 9
             fetched_song = Song.where("year BETWEEN ? AND ?", decade_selected, decade_end).sample
             chosen_songs << fetched_song
             start += 1
             count += 1
+
         end
         render json: chosen_songs, status: :ok
     end

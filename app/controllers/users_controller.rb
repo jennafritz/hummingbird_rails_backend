@@ -49,6 +49,15 @@ class UsersController < ApplicationController
         end
     end
 
+    def login
+        user = User.find_by(username: params[:username], password: params[:password])
+        if user
+            render json: user, status: :ok
+        else
+            render json: {error: "Username or Password is incorrect"}
+        end
+    end
+
     private
 
     def user_params
