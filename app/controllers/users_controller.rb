@@ -54,7 +54,7 @@ class UsersController < ApplicationController
         if user
             render json: user, status: :ok
         else
-            render json: {error: "Username or Password is incorrect"}
+            render json: {error: "Username or Password is incorrect"}, status: :not_found
         end
     end
 
