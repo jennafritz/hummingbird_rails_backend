@@ -12,18 +12,18 @@ User.destroy_all
 
 puts "Creating seeds! 🌸"
 User.create(
-  username: "Sean",
-  password: "sean",
+  username: "S",
+  password: "S",
   point: 30,
 )
 User.create(
-  username: "Katie",
-  password: "katie",
+  username: "K",
+  password: "K",
   point: 30,
 )
 User.create(
-  username: "Jenna",
-  password: "jenna",
+  username: "J",
+  password: "J",
   point: 30,
 )
 User.create(
