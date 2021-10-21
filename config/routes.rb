@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   post "/get_songs", to: "songs#get_songs"
   resources :users, only: [:create, :update, :index]
   post "/login", to: "users#login"
+  patch "/update_user_games", to: "user_games#update_user_games"
 
   get "*path", to: "fallback#index", constraints: ->(req) { !req.xhr? && req.format.html? }
 
