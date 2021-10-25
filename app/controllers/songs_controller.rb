@@ -24,7 +24,6 @@ class SongsController < ApplicationController
 
     def get_songs
         chosen_songs = []
-        # byebug
         decades = params["decades"]
         # (numTurns - 1) % 4
         start = params["numGroups"]

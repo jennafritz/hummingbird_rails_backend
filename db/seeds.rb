@@ -14,52 +14,52 @@ puts "Creating seeds! 🌸"
 User.create(
   username: "S",
   password: "S",
-  point: 30,
+  points: 30,
 )
 User.create(
   username: "K",
   password: "K",
-  point: 30,
+  points: 30,
 )
 User.create(
   username: "J",
   password: "J",
-  point: 30,
+  points: 30,
 )
 User.create(
   username: "Michelle",
   password: "michelle",
-  point: 50,
+  points: 50,
 )
 User.create(
   username: "David",
   password: "david",
-  point: 55,
+  points: 55,
 )
 User.create(
   username: "Isaac",
   password: "isaac",
-  point: 55,
+  points: 55,
 )
 User.create(
   username: "Corey",
   password: "corey",
-  point: 45,
+  points: 45,
 )
 User.create(
   username: "Itche",
   password: "itche",
-  point: 35,
+  points: 35,
 )
 User.create(
   username: "Nicholas",
   password: "nicholas",
-  point: 25,
+  points: 25,
 )
 User.create(
   username: "Yosef",
   password: "yosef",
-  point: 15,
+  points: 15,
 )
 
 puts "Done creating seeds ✅"
