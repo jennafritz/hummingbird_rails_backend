@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
 
     before_action :find_user, only: [:show, :update, :destroy]
+    skip_before_action :authorized, only: [:create]
 
     # removed the following in lieu of JWT auth
 
@@ -14,10 +15,10 @@ class UsersController < ApplicationController
     # end
 
     # def check_user
-    #     user = User.find_by(username: params[:username])
-    #     if user
-    #         render json: {error: "This username is taken"}
-    #     else
+        # user = User.find_by(username: params[:username])
+        # if user
+        #     render json: {error: "This username is taken"}
+        # else
     #         render json: {error: "User does not exist"}
     #     end
     # end
@@ -33,10 +34,13 @@ class UsersController < ApplicationController
     end
 
     def create
-        new_user = User.create!(user_params)
-        render json: new_user
-    rescue ActiveRecord::RecordInvalid => invalid
-        render json: {message: invalid.record.errors.full_messages}, status: :unprocessable_entity
+        @user = User.create!(user_params)
+        if user.valid?
+            @token = encode_token(user_id: @user.id)
+            render json: {user: UserSerializer.new(@user), token: token}, status: :created
+        end
+        rescue ActiveRecord::RecordInvalid => invalid
+            render json: {message: invalid.record.errors.full_messages}, status: :unprocessable_entity
     end
 
     def update
@@ -50,11 +54,12 @@ class UsersController < ApplicationController
     end
 
     def login
-        user = User.find_by(username: params[:username], password: params[:password])
-        if user
-            render json: user, status: :ok
-        else
-            render json: {error: "Username or Password is incorrect"}, status: :not_found
+        user = User.find_by(username: params[:username])
+        if user && user.authenticate(params[:password])
+            token = encode_token({user_id: user.id})
+            render json: {user: UserSerializer.new(user), token: token}, status: :accepted
+        else 
+            render json: {error: "Invalid Username or Password"}, status: :unauthorized
         end
     end
 
