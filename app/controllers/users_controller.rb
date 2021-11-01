@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
-    
+
     before_action :find_user, only: [:show, :update, :destroy]
-    skip_before_action :authorized, only: [:create, :login]
+    skip_before_action :authorized, only: [:create]
 
     # removed the following in lieu of JWT auth
 
@@ -35,7 +35,6 @@ class UsersController < ApplicationController
 
     def create
         @user = User.create!(user_params)
-        byebug
         if user.valid?
             @token = encode_token(user_id: @user.id)
             render json: {user: UserSerializer.new(@user), token: token}, status: :created
@@ -44,15 +43,31 @@ class UsersController < ApplicationController
             render json: {message: invalid.record.errors.full_messages}, status: :unprocessable_entity
     end
 
-    def update
-        user = User.find_by(id: params[:id])
-        if user
-            user.update!(user_params)
-            render json: user, status: :ok
-        else
-            render json: {error: "User not found"}
+    def update_users
+        users = params["playersArray"]
+        updated_users = []
+        users.each do |player|
+            user = User.find_by(id: player[:user_id])
+            new_points = user[:points] + player[:points]
+            if user
+                user.update!(points: new_points)
+                updated_users << user
+            end
         end
+        render json: updated_users, status: :ok
+    rescue ActiveRecord::RecordInvalid => invalid
+        render json: {error: invalid.record.errors.full_messages}, status: :unprocessable_entity
     end
+
+    # def update
+    #     user = User.find_by(id: params[:id])
+    #     if user
+    #         user.update!(user_params)
+    #         render json: user, status: :ok
+    #     else
+    #         render json: {error: "User not found"}
+    #     end
+    # end
 
     def login
         user = User.find_by(username: params[:username])
