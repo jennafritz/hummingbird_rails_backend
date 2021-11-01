@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 
     before_action :find_user, only: [:show, :update, :destroy]
-    skip_before_action :authorized, only: [:create]
+    skip_before_action :authorized, only: [:create, :login]
 
     # removed the following in lieu of JWT auth
 
@@ -35,9 +35,9 @@ class UsersController < ApplicationController
 
     def create
         @user = User.create!(user_params)
-        if user.valid?
+        if @user.valid?
             @token = encode_token(user_id: @user.id)
-            render json: {user: UserSerializer.new(@user), token: token}, status: :created
+            render json: {user: UserSerializer.new(@user), token: @token}, status: :created
         end
         rescue ActiveRecord::RecordInvalid => invalid
             render json: {message: invalid.record.errors.full_messages}, status: :unprocessable_entity
