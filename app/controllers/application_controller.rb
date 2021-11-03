@@ -3,6 +3,8 @@ class ApplicationController < ActionController::API
     include ActionController::Cookies
   
     JWT_SECRET = ENV["JWT_SECRET"]
+
+    # test
   
   
     def encode_token(payload)
