@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   # get "/check_user", to: "users#check_user"
   
   get "/leaderboard", to: "users#leaderboard"
-
+  get "/test", to: "users#test"
   resources :user_games, only: [:create]
   resources :games, only: [:create]
   resources :songs, only: [:index]

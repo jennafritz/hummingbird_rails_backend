@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 
     before_action :find_user, only: [:show, :update, :destroy]
-    skip_before_action :authorized, only: [:create, :login]
+    skip_before_action :authorized, only: [:create, :login, :test]
 
     # removed the following in lieu of JWT auth
 
@@ -22,6 +22,10 @@ class UsersController < ApplicationController
     #         render json: {error: "User does not exist"}
     #     end
     # end
+    def test
+        byebug
+        render json: {message: "this is a test"}, status: :ok
+    end
 
     def leaderboard
         leaderboard = User.all.order("points DESC")[0, 10]
@@ -34,6 +38,7 @@ class UsersController < ApplicationController
     end
 
     def create
+        byebug
         @user = User.create!(user_params)
         if @user.valid?
             @token = encode_token(user_id: @user.id)
