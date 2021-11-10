@@ -84,17 +84,18 @@ test:
 # Read https://guides.rubyonrails.org/configuring.html#configuring-a-database
 # for a full overview on how database connection configuration can be specified.
 #
-production:
-  <<: *default
-  database: hummingbird_development_db
-  username: <%= ENV["DB_USERNAME"] %>
-  password: <%= ENV['DB_PASSWORD'] %>
-  host: <%= ENV['DB_HOST'] %>
-  port: 5432
-
 # production:
-#   url: <%= ENV['DATABASE_URL'] %>
+#   <<: *default
+#   database: hummingbird_development_db
+#   username: <%= ENV["DB_USERNAME"] %>
+#   password: <%= ENV['DB_PASSWORD'] %>
+#   host: <%= ENV['DB_HOST'] %>
+#   port: 5432
+
+production:
+  url: <%= ENV['DATABASE_URL'] %>
   
   # database: hummingbird_rails_backend_production
   # username: hummingbird_rails_backend
   # password: <%= ENV['HUMMINGBIRD_RAILS_BACKEND_DATABASE_PASSWORD'] %>
+ 
