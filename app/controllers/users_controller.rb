@@ -23,7 +23,7 @@ class UsersController < ApplicationController
     #     end
     # end
     def test
-        byebug
+        # byebug
         render json: {message: "this is a test"}, status: :ok
     end
 
@@ -38,7 +38,7 @@ class UsersController < ApplicationController
     end
 
     def create
-        byebug
+        # byebug
         @user = User.create!(user_params)
         if @user.valid?
             @token = encode_token(user_id: @user.id)
